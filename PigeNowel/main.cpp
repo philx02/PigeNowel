@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   pige(wOne, wTwo);
   for (size_t wIter = 0; wIter < wOne.size(); ++wIter)
   {
-    sendEmail("127.0.0.1", wOne[wIter].first, wOne[wIter].second, "no-reply@spoluck.ca", "Vous avez pigez...", wTwo[wIter]);
+    sendEmail("127.0.0.1", wOne[wIter].first, wOne[wIter].second, "no-reply@spoluck.ca", "Vous avez pigé...", wTwo[wIter]);
   }
   return 0;
 }
