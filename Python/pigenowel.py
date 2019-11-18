@@ -7,34 +7,40 @@ from email.message import EmailMessage
 import csv
 import random
 
-tx = []
+participants = []
 rx = []
+
+class Participant:
+    def __init__(self, name, email, constraints):
+        self.name = name
+        self.email = email
+        self.constraints = constraints
 
 with open("participants.csv") as csv_file:
     csv_reader = csv.reader(csv_file)
     for row in csv_reader:
-        tx.append(row)
-        rx.append(row)
+        participants.append(Participant(row[0], row[1], row[2]))
+        rx.append(row[0])
 
-def duplicate_exists(tx, rx):
-    for i in range(0, len(tx)):
-        if tx[i] == rx[i]:
+def fail_constraint(participants, rx):
+    for i in range(0, len(participants)):
+        if participants[i].name == rx[i] or participants[i].constraints == rx[i]:
             return True
     return False
 
-while duplicate_exists(tx, rx):
+while fail_constraint(participants, rx):
     random.shuffle(rx)
 
 s = smtplib.SMTP(host="mailout.easydns.com", port=587)
 s.login("spoluck.ca", "sg1240rj")
 #s = smtplib.SMTP(host="spoluck.ca")
-for i in range(0, len(tx)):
+for i in range(0, len(participants)):
     msg = EmailMessage()
-    msg['Subject'] = "Pige Noël 2018"
+    msg['Subject'] = "Pige Noël 2019"
     msg['From'] = "ne-pas-repondre@spoluck.ca"
-    msg['To'] = tx[i][1]
+    msg['To'] = participants[i].email
     #msg['To'] = "pcayouette@spoluck.ca"
-    msg.set_content("Yo " + tx[i][0] + ", tu as pigé " + rx[i][0])
+    msg.set_content("Yo " + participants[i].name + ", tu as pigé " + rx[i])
     s.send_message(msg)
-    print("Email to " + tx[i][0] + " sent.")
+    print("Email to " + participants[i].email + " sent.")
 s.quit()
