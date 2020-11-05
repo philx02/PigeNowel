@@ -30,7 +30,7 @@ s.login("spoluck.ca", "sg1240rj")
 #s = smtplib.SMTP(host="spoluck.ca")
 for i in range(0, len(tx)):
     msg = EmailMessage()
-    msg['Subject'] = "Pige Noël 2018"
+    msg['Subject'] = "Pige Noël 2020"
     msg['From'] = "ne-pas-repondre@spoluck.ca"
     msg['To'] = tx[i][1]
     #msg['To'] = "pcayouette@spoluck.ca"
